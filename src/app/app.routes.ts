@@ -6,7 +6,8 @@ import { SettingsComponent } from './pages/settings/settings.component';
 import { StatsComponent } from './pages/stats/stats.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', pathMatch: 'full', redirectTo: '/home'},
+  { path: 'home', component: HomeComponent},
   { path: 'transactions', component: TranComponent },
   { path: 'accounts', component: AccountsComponent },
   { path: 'stats', component: StatsComponent },
