@@ -1,1 +1,73 @@
-<p>tran works!</p>
+<div class="p-grid p-align-center p-justify-center" style="margin: 2rem;">
+
+    <div class="filter-strip">
+        <div class="card flex justify-content-center">
+            <div class="grid formgrid">
+                <div class="field col">
+                    <span class="p-float-label">
+                        <p-calendar [(ngModel)]="date1" [showIcon]="true" view="month" dateFormat="M, y"
+                            [iconDisplay]="'input'" [readonlyInput]="true" />
+                        <label for="calendar">Month</label>
+                    </span>
+                </div>
+                <div class="field col">
+                    <span class="p-float-label">
+                        <p-calendar [(ngModel)]="date" view="year" dateFormat="yy" [showIcon]="true"
+                            [iconDisplay]="'input'" [readonlyInput]="true" />
+                        <label for="year">Year</label>
+                    </span>
+                </div>
+                <div class="field col">
+                    <span class="p-float-label">
+                        <p-dropdown [options]="accountOptions" [(ngModel)]="selectedAccount" optionLabel="name"
+                            [style]="{ width: '250px' }" (onChange)="onFilterChange('account')" />
+                        <label for="account">Account</label>
+                    </span>
+                </div>
+                <div class="field col">
+                    <span class="p-float-label">
+                        <p-dropdown [options]="tranCategories" [(ngModel)]="selectedTranCategory" optionLabel="name"
+                            [style]="{ width: '200px' }" (onChange)="onFilterChange('category')" />
+                        <label for="category">Category</label>
+                    </span>
+                </div>
+                <div class="field col">
+                    <p-button label="Clear" (onClick)="onFilterClear()" />
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <p-divider />
+        <p-table [value]="filteredTransactions" styleClass="p-datatable-gridlines" scrollable="true"
+            [scrollHeight]="'400px'" [tableStyle]="{ 'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Date</th>
+                    <th>Account</th>
+                    <th>Category</th>
+                    <th>Note</th>
+                    <th>Amount</th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-transaction>
+                <tr>
+                    <td>{{ transaction.date | date: 'dd-MM-yyyy hh:mm a'}}</td>
+                    <td>{{ transaction.accountName }}</td>
+                    <td>{{ transaction.category.name }}</td>
+                    <td>{{ transaction.note }}</td>
+                    <td>{{ transaction.amount | currency : 'INR' }}
+                        <span [ngSwitch]="transaction.expenseType">
+                            <i *ngSwitchCase="'Expense'" class="pi pi-arrow-down" style="color: red"></i>
+                            <i *ngSwitchCase="'Transfer'" class="pi pi-arrows-h" style="color: orange"></i>
+                            <i *ngSwitchDefault class="pi pi-arrow-up" style="color: green"></i>
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
